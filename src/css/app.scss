@@ -1,0 +1,29 @@
+// 设置编码格式
+@charset 'utf-8';
+
+// 引入谷歌字体
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+// 导入字体图标
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+// 设置变量
+
+$purple: #c9168d;
+$pink: #fa7c91;
+$dark: #333;
+$beige-lighter: rgb(245, 245, 245);
+
+// 更新全局变量
+$family-sans-serif: 'Nunito', sans-serif;
+$primary: $purple;
+$link:$dark;
+$danger:$pink;
+
+// 设置组件变量
+$body-background-color: $beige-lighter;
+
+// 导入bulma 导入之前可以覆盖bulma样式
+@import '../../node_modules/bulma/bulma.sass';
+

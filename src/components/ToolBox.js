@@ -1,6 +1,10 @@
 import React from "react";
 
 class ToolBox extends React.Component {
+  state = {
+    searchText: ''
+  }
+
   render() {
     return (
       <div className="tool-box">

@@ -1,53 +1,26 @@
 // 导入 react
 import React from "react";
+// 导入 axios
+import axios from "commons/axios"
 import ToolBox from "components/ToolBox";
 import Product from "components/Product";
 
 // 继承
 class Products extends React.Component {
   // 细节决定成败
-  products = [
-    {
-      id: 1,
-      name: "Air	Jordan	4",
-      image: "/images/1.jpg",
-      tags: "92	",
-      price: 59440,
-      status: "available",
-    },
-    {
-      id: 2,
-      name: "Nike	Paul	George	PG	3",
-      image: "/images/2.jpg",
-      tags: "25	Colors",
-      price: 53800,
-      status: "available",
-    },
-    {
-      id: 3,
-      name: "Jordan	Why	Not	Zer0.2",
-      image: "/images/3.jpg",
-      tags: "16	Color,	y",
-      price: 48900,
-      status: "available",
-    },
-    {
-      id: 4,
-      name: "Nike	Air	Foamposite	One",
-      image: "/images/4.jpg",
-      tags: "84	Colors",
-      price: 73148,
-      status: "available",
-    },
-    {
-      id: 5,
-      name: "adidas	Harden	Vol.3",
-      image: "/images/5.jpg",
-      tags: "34	Colors",
-      price: 46900,
-      status: "unavailable",
-    },
-  ];
+  state = {
+    products:[]
+  }
+  // 生命周期函数 组件初次渲染完成执行
+  componentDidMount() {
+    axios.get('products').then(response => {
+      console.log(response.data);
+      // 修改数据
+      this.setState({
+        products:response.data
+      })
+    })
+  }
 
   render() {
     return (
@@ -57,7 +30,7 @@ class Products extends React.Component {
           <div className="columns is-multiline is-desktop">
 
             {
-                this.products.map(p => {
+                this.state.products.map(p => {
                     return (
                         <div className="column is-3" key={p.id}>
                             <Product product={p} />

@@ -149,15 +149,16 @@ body {
       z-index: 99;
     }
   }
-  
+  // 入场动画buf
   .product-fade-enter {
     opacity: 0.1;
   }
   .product-fade-enter-active {
     opacity: 1;
+    // CSSTransition组件属性timeout 大于等于transition 
     transition: all 0.3s ease-in;
   }
-  
+  // 离场动画buf
   .product-fade-exit {
     opacity: 1;
   }

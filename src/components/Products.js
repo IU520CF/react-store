@@ -4,13 +4,14 @@ import React from "react";
 import axios from "commons/axios"
 import ToolBox from "components/ToolBox";
 import Product from "components/Product";
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 // 继承
 class Products extends React.Component {
   // 细节决定成败
   state = {
-    products:[],
-    sourceProducts:[]
+    products: [],
+    sourceProducts: []
   }
   // 生命周期函数 组件初次渲染完成执行
   componentDidMount() {
@@ -18,8 +19,8 @@ class Products extends React.Component {
       console.log(response.data);
       // 修改数据
       this.setState({
-        products:response.data,
-        sourceProducts:response.data
+        products: response.data,
+        sourceProducts: response.data
       })
     })
   }
@@ -32,13 +33,13 @@ class Products extends React.Component {
     // 2. 过滤数组
     _products = _products.filter(p => {
       // g全局 i不区分大小写
-      const matchArray = p.name.match(new RegExp(text,'gi'))
+      const matchArray = p.name.match(new RegExp(text, 'gi'))
       // 不为空返回
       return !!matchArray
     })
     // 3. 过来后的数组
     this.setState({
-      products : _products
+      products: _products
     })
   }
 
@@ -48,16 +49,21 @@ class Products extends React.Component {
         <ToolBox search={this.search} />
         <div className="products">
           <div className="columns is-multiline is-desktop">
-
-            {
+            {/* component 是因为这个库组件会默认生成一个div影响布局，设置component为null就不会生成 */}
+            <TransitionGroup component={null}>
+              {
                 this.state.products.map(p => {
-                    return (
-                        <div className="column is-3" key={p.id}>
-                            <Product product={p} />
-                        </div> 
-                    )
+                  return (
+                    // classNames 必须添加 不同阶段绑定不同类名达到效果        timeout 必须添加 动画开始与结束
+                    <CSSTransition classNames="product-fade" timeout={{ enter: 300, exit: 300 }}>
+                      <div className="column is-3" key={p.id}>
+                        <Product product={p} />
+                      </div>
+                    </CSSTransition>
+                  )
                 })
-            }
+              }
+            </TransitionGroup>
           </div>
         </div>
       </div>

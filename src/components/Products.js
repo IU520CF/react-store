@@ -9,7 +9,8 @@ import Product from "components/Product";
 class Products extends React.Component {
   // 细节决定成败
   state = {
-    products:[]
+    products:[],
+    sourceProducts:[]
   }
   // 生命周期函数 组件初次渲染完成执行
   componentDidMount() {
@@ -17,15 +18,34 @@ class Products extends React.Component {
       console.log(response.data);
       // 修改数据
       this.setState({
-        products:response.data
+        products:response.data,
+        sourceProducts:response.data
       })
+    })
+  }
+
+  // search 搜索
+  search = text => {
+    console.log(text);
+    // 1. 拿到数组  结构赋值（es6复制一个）
+    let _products = [...this.state.sourceProducts]
+    // 2. 过滤数组
+    _products = _products.filter(p => {
+      // g全局 i不区分大小写
+      const matchArray = p.name.match(new RegExp(text,'gi'))
+      // 不为空返回
+      return !!matchArray
+    })
+    // 3. 过来后的数组
+    this.setState({
+      products : _products
     })
   }
 
   render() {
     return (
       <div>
-        <ToolBox />
+        <ToolBox search={this.search} />
         <div className="products">
           <div className="columns is-multiline is-desktop">
 
@@ -47,3 +67,4 @@ class Products extends React.Component {
 
 // 导出
 export default Products;
+
